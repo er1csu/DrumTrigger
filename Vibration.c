@@ -6,18 +6,19 @@
 #include "../inc/tm4c123gh6pm.h"
 
 void Init_Vibration_Sensors() {
-    // Init cylinderical vib sensors (Port E 2, 3, 4, 5)
+    // Init cylinderical vib sensors (Port E 2, 3)
     SYSCTL_RCGCGPIO_R |= 0x10;                  // Activate clock for Port E
-    while((SYSCTL_PRGPIO_R & 0x10) == 0) {}     // Wait for ready
-    GPIO_PORTE_DIR_R &= 0x03;                  // PE 2,3,4,5 are inputs
-    GPIO_PORTE_IS_R &= 0x03;                   // Configure for edge triggering
-    GPIO_PORTE_IBE_R &= 0x03;                  // Do not interrupt both edges
-    GPIO_PORTE_IEV_R |= 0x3C;                   // rising edge
+    while((SYSCTL_PRGPIO_R & 0x10) == 0) {}     // Wait for ready    
+    GPIO_PORTE_DIR_R &= ~0x0C;                  // PE 2,3 are inputs
+    GPIO_PORTE_IS_R &= ~0x0C;                   // Configure for edge triggering
+    GPIO_PORTE_IBE_R &= ~0x0C;                  // Do not interrupt both edges
+    GPIO_PORTE_IEV_R |= 0x0C;                   // rising edge
     GPIO_PORTE_PCTL_R = 0x0;
     GPIO_PORTE_AFSEL_R = 0x0;
-    //GPIO_PORTE_PDR_R |= 0x3C;                   // Enable pull down resistor (input high when pushed)
-    GPIO_PORTE_ICR_R = 0x3C;                    // Clear flag for 2,3,4,5
-    GPIO_PORTE_IM_R |= 0x3C;                    // Arm interrupt on PE 2,3,4,5
+    GPIO_PORTE_PDR_R |= 0x0C;                   // Enable pull down resistor (input high when pushed)
+    GPIO_PORTE_ICR_R = 0x0C;                    // Clear flag for 2,3
+    GPIO_PORTE_IM_R |= 0x0C;                    // Arm interrupt on PE 2,3
+    GPIO_PORTE_DEN_R |= 0x0C;
     NVIC_PRI1_R = (NVIC_PRI1_R&0xFFFFFF0F) | 0x00000040; // priority 2 (3rd highest)
     NVIC_EN0_R |= 0x10;                         // Enable interrupt on port E
     
@@ -35,7 +36,7 @@ void Init_Vibration_Sensors() {
 }
 
 void GPIOPortE_Handler(void) {
-    if (GPIO_PORTE_RIS_R & 0x04) {
+    if (GPIO_PORTE_RIS_R & 0x0C) {
         
     }        
 }
