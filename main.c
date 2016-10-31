@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "ST7735.h"
 #include "Vibration.h"
+#include "Buttons.h"
 #include "Pll.h"
 #include "../inc/tm4c123gh6pm.h"
 
@@ -14,10 +15,10 @@ void WaitForInterrupt(void);  // low power mode
 void DelayWait10ms(uint32_t n);
 
 
-int main(void){//uint32_t j; // main 1
+int main(void) {
     PLL_Init(Bus80MHz);                  // set system clock to 80 MHz
-    InitVibrationSensors();
-    
+    Init_Vibration_Sensors();
+    Init_Buttons();    
     while(1) {
 
     }

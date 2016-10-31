@@ -1,26 +1,32 @@
 // Vibration.c
 #include <stdint.h>
+#include "Vibration.h"
 #include "ST7735.h"
+#include "ADCSWTrigger.h"
 #include "../inc/tm4c123gh6pm.h"
 
-void InitVibrationSensors() {
-    // Initialize PB0 to use the vibration sensor
-    SYSCTL_RCGCGPIO_R |= 0x02;                  // Activate clock for Port B
+void Init_Vibration_Sensors() {
+    SYSCTL_RCGCGPIO_R |= 0x02;                  // Activate clock for Port E
     while((SYSCTL_PRGPIO_R & 0x02) == 0) {}     // Wait for ready
-    GPIO_PORTB_DIR_R &= ~0x03;                  // PB1 & PB0 are inputs
-    GPIO_PORTB_IS_R &= ~0x03;                   // Configure for edge triggering
-    GPIO_PORTB_IBE_R &= ~0x03;                  // Do not interrupt both edges
-    GPIO_PORTB_IEV_R |= 0x03;                   // Enable interrupt event
-    GPIO_PORTB_PCTL_R = 0x0;
-    GPIO_PORTB_AFSEL_R = 0x0;
-    GPIO_PORTB_PDR_R |= 0x03;                   // Enable pull down (input high when pushed)
-    GPIO_PORTB_ICR_R = 0x03;                    // Clear flag for 0 and 1
-    GPIO_PORTB_IM_R |= 0x03;                    // Arm interrupt on PB0,1
-    NVIC_PRI0_R = (NVIC_PRI0_R&0xFFFF00FF) | 0x0000A000; //priority 5
-    NVIC_EN0_R = 0x02;                          // Enable interrupt 1 in NVIC
-    GPIO_PORTB_DEN_R |= 0x01;                   // Enable PB0
+    GPIO_PORTE_DIR_R &= 0x03;                  // PE 2,3,4,5 are inputs
+    GPIO_PORTE_IS_R &= 0x03;                   // Configure for edge triggering
+    GPIO_PORTE_IBE_R &= 0x03;                  // Do not interrupt both edges
+    GPIO_PORTE_IEV_R |= 0x3C;                   // rising edge
+    GPIO_PORTE_PCTL_R = 0x0;
+    GPIO_PORTE_AFSEL_R = 0x0;
+    GPIO_PORTE_PDR_R |= 0x3C;                   // Enable pull down (input high when pushed)
+    GPIO_PORTE_ICR_R = 0x3C;                    // Clear flag for 2,3,4,5
+    GPIO_PORTE_IM_R |= 0x3C;                    // Arm interrupt on PE 2,3,4,5
+    NVIC_PRI1_R = (NVIC_PRI1_R&0xFFFFFF0F) | 0x00000040; // priority 2 (3rd highest)
+    NVIC_EN0_R |= 0x10;                         // Enable interrupt on port E
+    
+    // Init the flex sensor
+    ADC0_InitSWTriggerSeq3_Ch9();
+    
 }
 
-void GPIOPortB_Handler(void) {
-    GPIO_PORTB_ICR_R = 0x03;                     // Acknowledge flags
+void GPIOPortE_Handler(void) {
+    
+    
+    //foo     
 }

@@ -37,3 +37,11 @@
 *.crf
 *.htm
 *.axf
+*.uv*
+*.bak
+*.lst
+*.lnp
+*.map
+*.sct
+*.dep
+*.pdf
