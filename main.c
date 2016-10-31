@@ -16,9 +16,11 @@ void DelayWait10ms(uint32_t n);
 
 
 int main(void) {
+    int data = 0;
     PLL_Init(Bus80MHz);                  // set system clock to 80 MHz
     Init_Vibration_Sensors();
-    Init_Buttons();    
+    Init_Buttons();  
+    Mono_Sound_Init(data);   
     while(1) {
 
     }
