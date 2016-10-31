@@ -3,13 +3,12 @@
 #include "ST7735.h"
 #include "../inc/tm4c123gh6pm.h"
 
-
-static void Init_Buttons() {
+void Init_Buttons() {
     // Init switch PB0, PB1, PB2 Input, rising edge interrupts
    
     SYSCTL_RCGCGPIO_R |= 0x02;                  // Activate clock for Port B
     while((SYSCTL_PRGPIO_R & 0x02) == 0) {}     // Wait for ready
-    GPIO_PORTB_DEN_R |= 0xB7;                   // Enable digital I/O F
+    GPIO_PORTB_DEN_R |= 0x07;                   // Enable digital I/O F
     GPIO_PORTB_IBE_R &= ~0x07;                  // Do not interrupt both edges
     GPIO_PORTB_IEV_R |= 0x07;                   // Rising edge
     GPIO_PORTB_PDR_R |= 0x07;                   // 
@@ -23,7 +22,8 @@ static void Init_Buttons() {
 }
 
 
-void GPIOPortF_Handler(void) {
-    
+void GPIOPortB_Handler(void) {
+    int count = 0;
+    count += 1;
 
 }

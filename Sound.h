@@ -14,7 +14,13 @@ void Stereo_Sound_Init(uint32_t period);
  * Input: period
  * Output: none
  */
-void Mono_Sound_Init(uint32_t period);
+void Mono_Sound_Init(void);
 
 
+/* Output data to the DAC
+ *
+ */
+void DAC_Out(uint16_t code);
 
+
+void Timer0A_Init(uint32_t period);
