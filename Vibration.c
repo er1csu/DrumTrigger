@@ -36,7 +36,10 @@ void Init_Vibration_Sensors() {
 }
 
 void GPIOPortE_Handler(void) {
-    if (GPIO_PORTE_RIS_R & 0x0C) {
-        
+    if (GPIO_PORTE_RIS_R & 0x08) {
+        GPIO_PORTE_ICR_R = 0x08;
     }        
+    else {
+        GPIO_PORTE_ICR_R = 0x04;
+    }
 }

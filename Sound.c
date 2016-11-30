@@ -5,7 +5,7 @@
 
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
-int soundArrayIndex = 0;
+int index = 0;
 
 
 
@@ -69,6 +69,6 @@ void Timer0A_Init(uint32_t period){
 
 void Timer0A_Handler(void){
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // acknowledge timer0A timeout
-    DAC_Out(Bassoon64[soundArrayIndex]);
-    soundArrayIndex = (soundArrayIndex+1)%64; 
+    DAC_Out(Bassoon64[index]);
+    index = (index+1)%64; 
 }
