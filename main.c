@@ -58,6 +58,8 @@ int main(void) {
     //Timer0A_Init(2841);
     Timer0A_Init(1813);
     Timer1A_Init(8000000);
+    Timer2_Init(8000000);
+    Timer3_Init(41800);
  
 ST7735_InitR(INITR_REDTAB);
     ST7735_FillScreen(ST7735_BLACK);
