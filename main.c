@@ -49,26 +49,32 @@ const unsigned short arrow[] = {
 
 int main(void) {
     PLL_Init(Bus80MHz);                  // set system clock to 80 MHz
-//    Init_Vibration_Sensors();
-//    Init_Buttons();  
+    DisableInterrupts();
+    Stereo_Sound_Init();
+    //Init_Vibration_Sensors();
+    Init_Buttons();  
 //    //Mono_Sound_Init();  
-//    ST7735_InitR(INITR_REDTAB);
-//    //Timer0A_Init(2841);
-//    EnableInterrupts();
-//    ST7735_FillScreen(ST7735_WHITE);
-//    ST7735_DrawBitmap(0,10,arrow,10,10);
-//    ST7735_DrawBitmap(0,20,arrow,10,10);
-//    ST7735_DrawBitmap(0,30,arrow,10,10);
-    Init_test();
+    
+    //Timer0A_Init(2841);
+    Timer0A_Init(1813);
+    Timer1A_Init(8000000);
+ 
+ST7735_InitR(INITR_REDTAB);
+    ST7735_FillScreen(ST7735_BLACK);
+    ST7735_DrawBitmap(0,10,arrow,10,10);
+    ST7735_DrawBitmap(0,20,arrow,10,10);
+    ST7735_DrawBitmap(0,30,arrow,10,10);
+          EnableInterrupts(); 
+//    Init_test();
 //    for (;;) {        
 //       GPIO_PORTB_DATA_R ^= 0x01;                                                                         
 //    }
     for (;;) {
-        if (changeFlag) {
-            changeFlag = 0;
-            ST7735_FillRect(0,0,10,80,ST7735_WHITE);
-            ST7735_DrawBitmap(0,10+10*menuIndex,arrow,10,10);
-        }
+//        if (changeFlag) {
+//            changeFlag = 0;
+//            ST7735_FillRect(0,0,10,80,ST7735_WHITE);
+//            ST7735_DrawBitmap(0,10+10*menuIndex,arrow,10,10);
+//        }
     }
 
 }

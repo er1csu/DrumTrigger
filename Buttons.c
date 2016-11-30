@@ -5,6 +5,7 @@
 #include "ST7735.h"
 #include "../inc/tm4c123gh6pm.h"
 #include "SoundSamples.h"
+#include "Sound.h"
 int menuIndex = 0;
 int changeFlag = 0;
 
@@ -45,7 +46,9 @@ void GPIOPortB_Handler(void) {
     }
     else {
         GPIO_PORTB_ICR_R = 0x04;
-        soundToPlay = soundArray[menuIndex];
+        //soundToPlay = soundArray[menuIndex];
+        playFlag = 1;
+        TIMER1_CTL_R = 0x00000001;
     }
 }
 #endif
